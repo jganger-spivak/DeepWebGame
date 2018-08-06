@@ -10,9 +10,9 @@ setHost("Not implemented but should be host1.js");
 showVars();
 
 setInterval(update, 1000);
-var userInput = document.getElementById("userinput");
+
 </script>
-<input type="button" onclick='window.open("./host1.js","_blank","toolbar=yes, location=yes, directories=no, status=no, menubar=yes,scrollbars=yes, resizable=no, copyhistory=yes, width=600, height=400");' value="Host Code">
-<br>Enter Code:<input type="text" id="userinput"><input type="button" onclick='eval(userInput.value)' value='Execute'>
+<input type="button" onclick='document.write("<object width=\"400\" height=\"400\" data=\"helloworld.swf\">")' value="Host Code">
+<br>Enter Code:<input type="text" id="userinput"><input type="button" onclick='eval(document.getElementById("userinput").value)' value='Execute'>
 </body>
 </html>
