@@ -6,12 +6,11 @@ var host = null;
 
 //Setup and function declarations
 function createTrackerVar(name, initValue) {
-	eval(name + " = " + initValue);
-	trackedVars.push(name);
+	trackedVars[name] = initValue;
 }
 
 function setHost() {
-	var hostcode = fs.readFileSync(process.argv[2]);
+	const hostcode = fs.readFileSync(process.argv[2]);
 	eval(hostcode.toString());
 	host = new Host();
 }
@@ -24,11 +23,11 @@ setHost();
 function update() {
 	host.init(); 
 	host.tick();
-	for (var i = 0; i < trackedVars.length; i++) {
-		console.log(trackedVars[i] + ": " + eval(trackedVars[i]));
+	for (let $var in trackedVars) {
+		console.log($var + ": " + trackedVars[$var]);
 	}
 	
 }
 
 //Actual running of program ;)
-setInterval(function(){ update(); host.tick(); }, 1000);
+setInterval(() => { update(); host.tick(); }, 1000);
