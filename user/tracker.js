@@ -1,29 +1,34 @@
+//Vars declaration
+const fs = require("fs");
+const readline = require("readline");
 var trackedVars = [];
 var host = null;
 
+//Setup and function declarations
 function createTrackerVar(name, initValue) {
 	eval(name + " = " + initValue);
 	trackedVars.push(name);
 }
 
-function setHost(filename) {
-	host = new Host()
+function setHost() {
+	var hostcode = fs.readFileSync(process.argv[2]);
+	eval(hostcode.toString());
+	host = new Host();
 }
 
-function showVars() {
-	host.init(); 
-	document.write("<ul>");
-	for (var i = 0; i < trackedVars.length; i++) {
-		document.write("<li id='var" + i + "'>" + trackedVars[i] +": " + eval(trackedVars[i]) + "</li>");
-	}
-	document.write("</ul>");
-}
-
-
-
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+setHost();
 function update() {
-	for (var i = 0; i < trackedVars.length; i++) {
-		document.getElementById("var" + i).innerHTML = trackedVars[i] +": " + eval(trackedVars[i]);
-	}
+	host.init(); 
 	host.tick();
+	for (var i = 0; i < trackedVars.length; i++) {
+		console.log(trackedVars[i] + ": " + eval(trackedVars[i]));
+	}
+	
 }
+
+//Actual running of program ;)
+setInterval(function(){ update(); host.tick(); }, 1000);
